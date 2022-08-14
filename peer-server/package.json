@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-discord-peerserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "test",
+    "start" : "peerjs --port $PORT --key peerjs --path /src",
+    "dev" : "PORT=9000 npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtluiz/nodejs-discord-clone.git"
+  },
+  "author": "Matheus Luiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtluiz/nodejs-discord-clone/issues"
+  },
+  "homepage": "https://github.com/mtluiz/nodejs-discord-clone#readme",
+  "dependencies": {
+    "peer": "^0.6.1"
+  }
+}
