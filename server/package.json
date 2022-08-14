@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-discord-server",
+  "version": "1.0.0",
+  "description": "Nodejs server for Discord app clone",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtluiz/nodejs-discord-clone.git"
+  },
+  "author": "Matheus Luiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtluiz/nodejs-discord-clone/issues"
+  },
+  "homepage": "https://github.com/mtluiz/nodejs-discord-clone#readme",
+  "dependencies": {
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
