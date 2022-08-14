@@ -1,5 +1,4 @@
 import React from 'react'
-import Redirect from '../utils/Redirect'
 import { route } from 'preact-router'
 
 export default function Sidebar() {
