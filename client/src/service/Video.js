@@ -4,9 +4,10 @@ export default class Video {
   constructor() { }
   createVideoElement({ muted = true, src, srcObject }) {
     const video = document.createElement('video');
-    video.muted = muted
+    video.muted = false
     video.src = src
     video.srcObject = srcObject
+    video.controls = true
     if (src) {
       video.controls = true
       video.loop = true
@@ -18,8 +19,8 @@ export default class Video {
     return video
   }
 
-  renderVideo({ userId, stream = null, url = null, isCurrentId = false }) {
-    const video = this.createVideoElement({ src: url, srcObject: stream })
+  renderVideo({ userId, stream = null, url = null, isCurrentId = false, muted }) {
+    const video = this.createVideoElement({ src: url, srcObject: stream, muted })
     this.appendToHtmlTree(userId, video, isCurrentId)
   }
 
@@ -34,5 +35,12 @@ export default class Video {
 
     const videoGrid = document.getElementById('videogrid')
     videoGrid.append(div)
+  }
+
+  setParticipants(count) {
+    const myself = 1
+    const participants = document.getElementById('participants')
+    participants.innerHTML = count + myself;
+
   }
 }
