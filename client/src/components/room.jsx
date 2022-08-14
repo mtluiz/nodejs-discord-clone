@@ -4,6 +4,7 @@ import Bussiness from '../service/Bussiness';
 import Video from '../service/Video';
 import Media from '../service/Media';
 import SocketBuilder from '../service/SocketBuilder';
+import PeerBuilder from '../service/Peer';
 
 export default function Room({ room }) {
 
@@ -12,12 +13,22 @@ export default function Room({ room }) {
       const socketUrl = 'http://localhost:3000'
       const video = new Video()
       const media = new Media()
-      const socket = new SocketBuilder({socketUrl})
+      const socketBuilder = new SocketBuilder({socketUrl})
+      const peerConfig = Object.values({
+        id: undefined,
+        config: {
+          port: 9000,
+          host: 'localhost',
+          path: '/src'
+        }
+      })
+      const peerBuilder = new PeerBuilder({peerConfig})
 
       const deps = {
         video,
         media, 
-        socket,
+        socketBuilder,
+        peerBuilder,
         room
       }
       Bussiness.initialize(deps)
@@ -30,6 +41,7 @@ export default function Room({ room }) {
 
       <main>
         <h1>cam space</h1>
+        <h1>Participants</h1><h1 id="participants"></h1>
         <div id='videogrid'></div>
       </main>
 
