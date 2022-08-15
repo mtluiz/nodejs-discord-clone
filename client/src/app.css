@@ -89,6 +89,9 @@ aside li div{
 }
 
 .room{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: #37393F;
   flex-grow: 1;
   position: relative;
@@ -102,7 +105,8 @@ aside li div{
   padding: 0 20px;
   color: white;
   font-size: 18px;
-
+  align-items: center;
+  justify-content: space-between;
 }
 
 .room .hashtag{
@@ -112,20 +116,78 @@ aside li div{
 }
 
 .room footer{
-  position: absolute;
   bottom: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
+.video-room{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 40vh;
+  overflow-y: scroll;
+}
+
+.video-room::-webkit-scrollbar {
+  background: transparent;
+}
+
+
 .room .chat{
   background: #bbbbbb30;
   border-radius: 8px;
   height: 44px;
-  width: 90%;
+  width: 94%;
   border: none;
   color: white;
   font-size: 20px;
   padding: 4px 20px;
+  margin-bottom: 40px;
+}
+
+#videogrid{
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px 30px;
+  box-sizing: border-box;
+}
+
+#videogrid > div{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+video{
+  width: 380px;
+  height: 380px;
+}
+
+
+.home{
+  background: #37393F;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home h1{
+  font-size: 30px;
+  color: white;
+}
+
+.home img{
+  border-radius: 100px;
+  width: 300px;
+  margin-top: 20px;
 }
