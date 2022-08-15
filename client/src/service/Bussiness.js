@@ -73,7 +73,6 @@ export default class Bussiness {
   onPeerConnectionOpened = () => {
     return (peer) => {
       const id = peer.id
-      console.log('peer', peer);
       this.socket.emit('join-room', this.room, id)
     }
   }
