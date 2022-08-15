@@ -20,7 +20,7 @@ export default class Bussiness {
   }
 
   async #init() {
-    this.currentStream = await this.media.getCamera(false)
+    this.currentStream = await this.media.getCamera()
     this.socket = this.socketBuilder
                     .setUserConnected(this.onUserConnected())
                     .setUserDisconnected(this.onUserDisconnected())
@@ -31,22 +31,23 @@ export default class Bussiness {
         .setOnConnectionOpened(this.onPeerConnectionOpened())
         .setOnCallReceived(this.onPeerCallReceived())
         .setOnPeerStreamReceived(this.onPeerStreamReceived())
+        .setOnCallError(this.onPeerCallError())
+        .setOnCallClose(this.onPeerCallClose())
         .build()
 
-    this.addVideoStream('test01')
+    this.addVideoStream(this.currentPeer.id)
   }
 
   addVideoStream(userId, stream = this.currentStream, muted){
     this.video.renderVideo({
       userId,
       stream,
-      isCurrentId: false
+      isCurrentId: userId === this.currentPeer.id
     })
   }
 
   onUserConnected = function(){
     return userId => {
-      console.log('user connected', userId);
       this.currentPeer.call(userId, this.currentStream)
     }
   }
@@ -54,6 +55,12 @@ export default class Bussiness {
   onUserDisconnected = function() {
     return userId => {
       console.log('user disconnected', userId);
+      if(this.peers.has(userId)){
+        this.peers.get(userId).close()
+        this.peers.delete(userId)
+      }
+      this.video.setParticipants(this.peers.size)
+      this.video.removeVideoElement(userId)
     }
   }
 
@@ -73,8 +80,6 @@ export default class Bussiness {
 
   onPeerCallReceived = () => {
     return call => {
-      console.log('a');
-      console.log('answering call', call);
       call.answer(this.currentStream)
     }
   }
@@ -83,8 +88,21 @@ export default class Bussiness {
     return (call, stream) => {
       const callerId = call.peer
       this.addVideoStream(callerId, stream)
-      this.peers.set(callerId)
+      this.peers.set(callerId, call)
       this.video.setParticipants(this.peers.size)
+    }
+  }
+
+  onPeerCallError = () => {
+    return (call, error)=> {
+      console.log('an call error ocurred', error);
+      this.video.removeVideoElement(call.peer)
+    }
+  }
+
+  onPeerCallClose = () => {
+    return (call, error)=> {
+      console.log('call closed', call.peer);
     }
   }
 }
