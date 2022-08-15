@@ -9,7 +9,7 @@ export default function Sidebar() {
       alert('wrong room')
       return;
     }
-    return route(`room/?room=${room}`, true)
+    return route(`room?room=${room}`, true)
   }
 
   return (
