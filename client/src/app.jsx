@@ -2,6 +2,7 @@ import { useState } from 'preact/hooks'
 import Sidebar from './components/sidebar'
 import Room from './components/room';
 import Router from 'preact-router';
+import Home from './components/home';
 import './app.css';
 
 export function App() {
@@ -10,7 +11,8 @@ export function App() {
     <main className='discord'>
         <Sidebar />
         <Router>
-          <Room path="/" />  
+          <Home path="/" />
+          <Room strict path="/room" /> 
         </Router>
     </main>
   )
