@@ -2,12 +2,12 @@ import sleep from '../utils/sleep';
 
 export default class Video {
   constructor() { }
-  createVideoElement({ muted = true, src, srcObject }) {
+  createVideoElement({ muted, src, srcObject }) {
     const video = document.createElement('video');
-    video.muted = false
+    video.muted = muted
     video.src = src
     video.srcObject = srcObject
-    video.controls = true
+
     if (src) {
       video.controls = true
       video.loop = true
@@ -19,8 +19,9 @@ export default class Video {
     return video
   }
 
-  renderVideo({ userId, stream = null, url = null, isCurrentId = false, muted }) {
-    const video = this.createVideoElement({ src: url, srcObject: stream, muted })
+  renderVideo({ userId, stream = null, url = null, isCurrentId = false}) {
+    console.log(isCurrentId);
+    const video = this.createVideoElement({ src: url, srcObject: stream, muted: isCurrentId })
     this.appendToHtmlTree(userId, video, isCurrentId)
   }
 
@@ -30,7 +31,7 @@ export default class Video {
     div.classList.add('wrapper')
     div.append(video)
     const div2 = document.createElement('div')
-    div2.innerText = isCurrentId ? '' : userId
+    div2.innerText = isCurrentId ? 'Vosse' : userId
     div.append(div2)
 
     const videoGrid = document.getElementById('videogrid')
@@ -41,6 +42,10 @@ export default class Video {
     const myself = 1
     const participants = document.getElementById('participants')
     participants.innerHTML = count + myself;
+  }
 
+  removeVideoElement(id) {
+    const element = document.getElementById(id)
+    element.remove()
   }
 }
