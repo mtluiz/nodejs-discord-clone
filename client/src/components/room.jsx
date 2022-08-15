@@ -9,6 +9,7 @@ import PeerBuilder from '../service/Peer';
 export default function Room({ room }) {
 
   useEffect(() => {
+    document.querySelector('#videogrid').innerHTML = '';
     if (room) {
       const socketUrl = 'https://stormy-taiga-93430.herokuapp.com/'
       const video = new Video()
