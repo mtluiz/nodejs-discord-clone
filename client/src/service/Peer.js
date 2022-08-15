@@ -1,5 +1,3 @@
-import Peer from "peerjs-client";
-
 export default class PeerBuilder{
   constructor({peerConfig}){
       this.peerConfig = peerConfig;
@@ -8,6 +6,18 @@ export default class PeerBuilder{
       this.onCallReceived = defaultFn
       this.onConnectionOpened = defaultFn
       this.onPeerStreamReceived = defaultFn
+      this.OnCallError = defaultFn
+      this.onCallClose = defaultFn
+  }
+
+  setOnCallError(fn){
+    this.OnCallError = fn;
+    return this
+  }
+
+  setOnCallClose(fn) {
+    this.onCallClose = fn
+    return this
   }
 
   setOnError(fn) {
@@ -32,17 +42,30 @@ export default class PeerBuilder{
 
   #prepareCallEvent(call) {
     call.on('stream', stream => this.onPeerStreamReceived(call, stream))
+    call.on('error', error => this.onCallReceived(call, error))
+    call.on('close', error => this.onCallClose(call, error))
+    this.onCallReceived(call)
+  }
 
-    try{
-      this.onCallReceived(call)
-    }catch(err) {
-      console.log("deu erro porra");
+  #preparePeerInstanceFunction(peerModule) {
+    class PeerCustomModule extends peerModule{}
+
+    const peerCall = PeerCustomModule.prototype.call
+    const context = this
+    PeerCustomModule.prototype.call = function (id, stream) {
+      const call = peerCall.apply(this, [id, stream])
+      context.#prepareCallEvent(call)
+      return call
     }
+    return PeerCustomModule
   }
 
   build(){
-    const peer = new Peer(...this.peerConfig)
-
+    const PeerCustomInstance = this.#preparePeerInstanceFunction(Peer)
+    const peer = new PeerCustomInstance(undefined, {
+      key: "peerjs",
+      debug: 2
+    })
     peer.on('error', this.onError)
     peer.on('call', this.#prepareCallEvent.bind(this))
 
