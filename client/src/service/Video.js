@@ -20,7 +20,6 @@ export default class Video {
   }
 
   renderVideo({ userId, stream = null, url = null, isCurrentId = false}) {
-    console.log(isCurrentId);
     const video = this.createVideoElement({ src: url, srcObject: stream, muted: isCurrentId })
     this.appendToHtmlTree(userId, video, isCurrentId)
   }
@@ -31,6 +30,7 @@ export default class Video {
     div.classList.add('wrapper')
     div.append(video)
     const div2 = document.createElement('div')
+    div2.classList.add('title-name') 
     div2.innerText = isCurrentId ? 'Vosse' : userId
     div.append(div2)
 
