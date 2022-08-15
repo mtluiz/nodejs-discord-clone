@@ -12,7 +12,7 @@ export function App() {
         <Sidebar />
         <Router>
           <Home path="/" />
-          <Room strict path="/room" /> 
+          <Room strict path="/room" key={new Date().getTime()} /> 
         </Router>
     </main>
   )
