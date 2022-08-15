@@ -10,7 +10,7 @@ export default function Room({ room }) {
 
   useEffect(() => {
     if (room) {
-      const socketUrl = 'http://localhost:3000'
+      const socketUrl = 'https://stormy-taiga-93430.herokuapp.com/'
       const video = new Video()
       const media = new Media()
       const socketBuilder = new SocketBuilder({socketUrl})
@@ -18,8 +18,8 @@ export default function Room({ room }) {
         id: undefined,
         config: {
           port: 9000,
-          host: 'localhost',
-          path: '/src'
+          secure: true,
+          host: 'aqueous-bastion-00372.herokuapp.com'
         }
       })
       const peerBuilder = new PeerBuilder({peerConfig})
@@ -37,17 +37,20 @@ export default function Room({ room }) {
 
   return (
     <div className='room'>
-      <header> <div className='hashtag'>#</div>{room ? `room ${room}` : `general`}</header>
 
-      <main>
-        <h1>cam space</h1>
-        <h1>Participants</h1><h1 id="participants"></h1>
+      <header> 
+        <div style={{display: 'flex', alignItems: "center"}}><div className='hashtag'>#</div>{room ? `room ID: ${room}` : `Welcome`}</div>
+        <h1>Participants: <span id="participants">1</span></h1>
+      </header>
+
+      <main className='video-room'>
         <div id='videogrid'></div>
       </main>
 
       <footer>
         <input type="text" className='chat' placeholder='Message #general' />
       </footer>
+
     </div>
   )
 }
