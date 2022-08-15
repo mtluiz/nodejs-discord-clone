@@ -87,6 +87,9 @@ export default class Bussiness {
   onPeerStreamReceived = () => {
     return (call, stream) => {
       const callerId = call.peer
+      if(this.peers.has(callerId)){
+        return;
+      }
       this.addVideoStream(callerId, stream)
       this.peers.set(callerId, call)
       this.video.setParticipants(this.peers.size)
