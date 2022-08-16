@@ -2,14 +2,13 @@ import React from 'react'
 import { route } from 'preact-router'
 
 export default function Sidebar() {
-
   const redirectRoomWithId = () => {
     const room = prompt('Room name')
     if (!room) {
       alert('wrong room')
       return;
     }
-    return route(`room?room=${room}`, true)
+    return window.open('room?room=' + room)
   }
 
   return (
